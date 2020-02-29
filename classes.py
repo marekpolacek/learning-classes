@@ -146,3 +146,46 @@ print(str(special_1))
 print(special_1+special_2)
 
 print(len(special_1))
+
+# Exercise 8: Property decorators - getters, setters, and deleters
+
+class User:
+
+    def __init__(self,first,last):
+        self.first = first
+        self.last = last
+
+    @property
+    def name(self):
+        return '{} {}'.format(self.first, self.last)
+    @name.setter
+    def name(self,new_name):
+        first, last = new_name.split(' ')
+        self.first = first
+        self.last = last
+    @name.deleter
+    def name(self):
+        self.first = None
+        self.last = None
+
+    @property
+    def email(self):
+        return '{}.{}@email.com'.format(self.first.lower(),self.last.lower())
+
+user_1 = User('Test','User')
+print(user_1.first)
+print(user_1.last)
+print(user_1.name)
+print(user_1.email)
+
+user_1.name = 'Other User'
+print(user_1.first)
+print(user_1.last)
+print(user_1.name)
+print(user_1.email)
+
+del user_1.name
+print(user_1.first)
+print(user_1.last)
+print(user_1.name)
+print(user_1.email)

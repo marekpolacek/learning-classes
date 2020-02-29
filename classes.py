@@ -1,5 +1,6 @@
 class Employee:
 
+    # class variables
     raise_amount = 1.04
 
     # constructor
@@ -34,7 +35,7 @@ class Employee:
             return False
         return True
 
-# Exercise 1: creating instances of a class
+# Exercise 1: Creating instances of a class
 
 employee_1 = Employee('Marek','Polacek',50000)
 print(employee_1.fullname())
@@ -42,23 +43,78 @@ print(employee_1.fullname())
 employee_2 = Employee('Test','Employee',60000)
 print(employee_2.__dict__)
 
-# Exercise 2: using class variables and methods
+# Exercise 2: Using class variables and methods
 
 print(employee_1.pay)
 employee_1.apply_raise()
 print(employee_1.pay)
 
-# Exercise 3: using class methods and alternative constructors
+# Exercise 3: Using class methods and alternative constructors
 
 employee_3_string = 'John-Doe-40000'
 first, last, pay = employee_3_string.split('-')
 employee_3 = Employee(first,last,pay)
+print(employee_3)
 
 employee_4_string = 'Jane-Doe-70000'
 employee_4 = Employee.from_string(employee_4_string)
+print(employee_4)
 
-# Exercise 4: using static methods
+# Exercise 4: Using static methods
 
 import datetime
 my_date = datetime.date(2020,2,29)
 print(Employee.is_workday(my_date))
+
+# Exercise 5: Inheritance
+
+class Developer(Employee):
+
+    raise_amount = 1.10
+
+    def __init__(self,first,last,pay,programming_language):
+        super().__init__(first,last,pay)
+        self.programming_language = programming_language
+
+developer_1 = Developer('Marek','Polacek',50000,'Python')
+print(help(Developer))
+
+class Manager(Employee):
+
+    def __init__(self,first,last,pay,employees=None):
+        super().__init__(first,last,pay)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
+
+    def add_employee(self, employee):
+        if employee not in self.employees:
+            self.employees.append(employee)
+
+    def remove_employee(self, employee):
+        if employee in self.employees:
+            self.employees.remove(employee)
+
+    def print_employees(self):
+        for employee in self.employees:
+            print('-->', employee.fullname())
+
+manager_1 = Manager('Sue','Smith',80000,[employee_1])
+print(manager_1.email)
+manager_1.print_employees()
+
+manager_1.add_employee(employee_2)
+manager_1.print_employees()
+
+# Exercise 6: isinstance and issubclass
+
+print(isinstance(manager_1,Manager)) # true
+print(isinstance(manager_1,Employee)) # true
+print(isinstance(manager_1,Developer)) # false
+
+print(issubclass(Developer,Employee)) # true
+print(issubclass(Manager,Employee)) # true
+print(issubclass(Manager,Developer)) # false
+
+# Exercise 7: Special methods

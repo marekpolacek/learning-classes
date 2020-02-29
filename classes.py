@@ -117,4 +117,32 @@ print(issubclass(Developer,Employee)) # true
 print(issubclass(Manager,Employee)) # true
 print(issubclass(Manager,Developer)) # false
 
-# Exercise 7: Special methods
+# Exercise 7: Special methods - dunder
+
+class SpecialDeveloper(Developer):
+
+    def __init__(self,first,last,pay,programming_language):
+        super().__init__(first,last,pay,programming_language)
+
+    def __repr__(self):
+        return "Employee('{}','{}','{}')".format(self.first, self.last, self.pay)
+
+    def __str__(self):
+        return '{} - {}'.format(self.fullname(),self.email)
+
+    # arithmetic dunder methods
+    # add, sub, mul, ...
+    def __add__(self,other):
+        return self.pay + other.pay
+
+    def __len__(self):
+            return len(self.fullname())
+
+special_1 = SpecialDeveloper('Special','Developer',90000,'Python')
+special_2 = SpecialDeveloper('Second','Special Developer',100000,'Python')
+print(special_1)
+print(repr(special_1))
+print(str(special_1))
+print(special_1+special_2)
+
+print(len(special_1))
